@@ -8,3 +8,4 @@
 *.wixpdb
 *.cab
 *.log
+.vscode

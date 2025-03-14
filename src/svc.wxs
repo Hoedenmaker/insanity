@@ -3,7 +3,7 @@
   <Product Id="*" Name="fuck" Language="1033" Version="1.0.0.0" Manufacturer="fuck" UpgradeCode="17011c82-0bc7-4d14-bb49-c613fc14a54c">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
 
-    <MediaTemplate />
+    <MediaTemplate EmbedCab="yes"/>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
