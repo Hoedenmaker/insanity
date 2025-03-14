@@ -1,0 +1,7 @@
+#include <windows.h>
+
+#define IDI_MAINICON 101
+
+IDI_MAINICON ICON "assets/icon.ico"
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "fuck.manifest"

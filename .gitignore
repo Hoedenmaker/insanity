@@ -2,3 +2,9 @@
 *.dll
 /lib
 /include
+*.res
+*.msi
+*.wixobj
+*.wixpdb
+*.cab
+*.log

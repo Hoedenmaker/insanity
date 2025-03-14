@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="fuck" Language="1033" Version="1.0.0.0" Manufacturer="fuck" UpgradeCode="17011c82-0bc7-4d14-bb49-c613fc14a54c">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+
+    <MediaTemplate />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="fuck">
+
+          <Component Id="MainExecutable" Guid="17011c82-0bc7-4d14-bb49-c613fc14a54c">
+            <File Id="SvcExe" Source="svc.exe" />
+          </Component>
+
+          <Component Id="DLLs" Guid="20ab6d88-4ec2-4a40-b6de-70e4a8c65871">
+            <File Id="sdlDLL" Source="SDL3.dll" />
+          </Component>
+
+          <Directory Id="AssetsFolder" Name="Assets">
+            <Component Id="AssetsComponent" Guid="8f5042c0-178c-42d5-943a-836cb65457df">
+              <File Id="Picture" Source="assets/fuck.bmp" />
+              <File Id="Sound" Source="assets/dur.wav" />
+              <File Id="Icon" Source="assets/icon.ico" />
+            </Component>
+          </Directory>
+
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder">
+        <Component Id="DesktopShortcut" Guid="07d11072-1242-4fde-9871-5fcd09dd9259">
+          <Shortcut Id="DesktopShortcutId"
+                    Name="fucked up shit"
+                    Description="what is this?"
+                    Target="[INSTALLFOLDER]svc.exe"
+                    WorkingDirectory="INSTALLFOLDER"
+                    Icon="ProgramIcon"
+                    IconIndex="0" />
+          <RemoveFile Id="RemoveDesktopShortcut" Name="fucked up shit.lnk" On="uninstall" />
+
+          <RegistryValue Root="HKCU" Key="Software\fuck\fuckedUpShit" Name="DesktopShortcut" Type="string" Value="fucked up shit.lnk" KeyPath="yes" />
+        </Component>
+      </Directory>
+
+    </Directory>
+
+    <Icon Id="ProgramIcon" SourceFile="assets/icon.ico" />
+
+    <Feature Id="MainFeature" Title="svc" Level="1">
+      <ComponentRef Id="MainExecutable" />
+      <ComponentRef Id="DLLs" />
+      <ComponentRef Id="AssetsComponent" />
+      <ComponentRef Id="DesktopShortcut" />
+    </Feature>
+
+
+  </Product>
+</Wix>

