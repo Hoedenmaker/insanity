@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="fuck" Language="1033" Version="1.0.0.0" Manufacturer="fuck" UpgradeCode="17011c82-0bc7-4d14-bb49-c613fc14a54c">
+  <Product Id="*" Name="fuck" Language="1033" Version="1.1.0.0" Manufacturer="fuck" UpgradeCode="17011c82-0bc7-4d14-bb49-c613fc14a54c">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
 
     <MediaTemplate EmbedCab="yes"/>
