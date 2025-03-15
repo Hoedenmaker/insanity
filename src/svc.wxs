@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="fuck" Language="1033" Version="1.0.0.0" Manufacturer="fuck" UpgradeCode="17011c82-0bc7-4d14-bb49-c613fc14a54c">
+  <Product Id="*" Name="fuck" Language="1033" Version="1.1.0.0" Manufacturer="fuck" UpgradeCode="17011c82-0bc7-4d14-bb49-c613fc14a54c">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
 
     <MediaTemplate EmbedCab="yes"/>
@@ -43,6 +43,21 @@
         </Component>
       </Directory>
 
+      <Directory Id="StartupFolder">
+        <Component Id="StartUpShortcut" Guid="d0ccfc64-41ac-410d-ab11-7b499cb19d90">
+          <Shortcut Id="StartUpShortcutId"
+                    Name="fucked up shit"
+                    Description="what is this?"
+                    Target="[INSTALLFOLDER]svc.exe"
+                    WorkingDirectory="INSTALLFOLDER"
+                    Icon="ProgramIcon"
+                    IconIndex="0" />
+          <RemoveFile Id="RemoveStartUpShortcut" Name="fucked up shit.lnk" On="uninstall" />
+
+          <RegistryValue Root="HKCU" Key="Software\fuck\fuckedUpShit" Name="StartUpShortcut" Type="string" Value="fucked up shit.lnk" KeyPath="yes" />
+        </Component>
+      </Directory>
+
     </Directory>
 
     <Icon Id="ProgramIcon" SourceFile="assets/icon.ico" />
@@ -52,6 +67,7 @@
       <ComponentRef Id="DLLs" />
       <ComponentRef Id="AssetsComponent" />
       <ComponentRef Id="DesktopShortcut" />
+      <ComponentRef Id="StartUpShortcut" />
     </Feature>
 
 
